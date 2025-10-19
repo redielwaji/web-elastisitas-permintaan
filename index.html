@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analisis Elastisitas Harga Permintaan</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container py-4">
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <h1>Analisis Elastisitas Harga Permintaan</h1>
+            <p>
+              Pahami seberapa sensitif permintaan terhadap perubahan harga
+              dengan alat analisis ini. Dapatkan wawasan untuk strategi
+              penetapan harga yang lebih baik.
+            </p>
+          </div>
+          <div class="col-md-4 text-center">
+            <i
+              class="bi bi-graph-up-arrow"
+              style="font-size: 5rem; opacity: 0.8"
+            ></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step Indicator -->
+      <div class="step-indicator">
+        <div class="step active" id="step1">
+          <div class="step-number">1</div>
+          <div class="step-label">Data Kuantitas</div>
+        </div>
+        <div class="step" id="step2">
+          <div class="step-number">2</div>
+          <div class="step-label">Data Harga</div>
+        </div>
+        <div class="step" id="step3">
+          <div class="step-number">3</div>
+          <div class="step-label">Hasil Analisis</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Quantity Data -->
+      <div class="card" id="quantityStep">
+        <div class="card-header">
+          <i class="bi bi-cart-check me-2"></i> Data Kuantitas Barang
+        </div>
+        <div class="card-body p-4">
+          <p class="text-muted mb-4">
+            Masukkan data jumlah barang sebelum dan sesudah perubahan harga
+            untuk menghitung persentase perubahan kuantitas.
+          </p>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="q1" class="form-label fw-semibold"
+                >Kuantitas Awal (Q1)</label
+              >
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="bi bi-box-seam"></i
+                ></span>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="q1"
+                  placeholder="Jumlah barang sebelum perubahan harga"
+                />
+              </div>
+              <div class="form-text">Contoh: 100 unit</div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="q2" class="form-label fw-semibold"
+                >Kuantitas Baru (Q2)</label
+              >
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="bi bi-box-arrow-in-down"></i
+                ></span>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="q2"
+                  placeholder="Jumlah barang setelah perubahan harga"
+                />
+              </div>
+              <div class="form-text">Contoh: 80 unit</div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mt-4">
+            <button class="btn btn-primary" id="nextToPrice">
+              Lanjut ke Data Harga <i class="bi bi-arrow-right ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Price Data -->
+      <div class="card hidden" id="priceStep">
+        <div class="card-header">
+          <i class="bi bi-currency-dollar me-2"></i> Data Harga Barang
+        </div>
+        <div class="card-body p-4">
+          <p class="text-muted mb-4">
+            Masukkan data harga sebelum dan sesudah perubahan untuk menghitung
+            persentase perubahan harga.
+          </p>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="p1" class="form-label fw-semibold"
+                >Harga Awal (P1)</label
+              >
+              <div class="input-group">
+                <span class="input-group-text">Rp</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="p1"
+                  placeholder="Harga sebelum perubahan"
+                />
+              </div>
+              <div class="form-text">Contoh: 50000</div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="p2" class="form-label fw-semibold"
+                >Harga Baru (P2)</label
+              >
+              <div class="input-group">
+                <span class="input-group-text">Rp</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="p2"
+                  placeholder="Harga setelah perubahan"
+                />
+              </div>
+              <div class="form-text">Contoh: 60000</div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <button class="btn btn-outline-secondary" id="backToQuantity">
+              <i class="bi bi-arrow-left me-2"></i> Kembali ke Data Kuantitas
+            </button>
+            <button class="btn btn-primary" id="calculateElasticity">
+              Hitung Elastisitas <i class="bi bi-calculator ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Results -->
+      <div class="card hidden" id="resultsStep">
+        <div class="card-header">
+          <i class="bi bi-graph-up me-2"></i> Hasil Analisis Elastisitas
+        </div>
+        <div class="card-body p-4">
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <h5 class="fw-semibold mb-3">Ringkasan Perubahan</h5>
+              <div class="result-card p-3 mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span>Perubahan Kuantitas (ΔQ):</span>
+                  <span class="fw-bold" id="deltaQResult">0%</span>
+                </div>
+              </div>
+              <div class="result-card p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span>Perubahan Harga (ΔP):</span>
+                  <span class="fw-bold" id="deltaPResult">0%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <h5 class="fw-semibold mb-3">Elastisitas Harga Permintaan</h5>
+              <div class="text-center p-4 bg-light rounded">
+                <h2 class="fw-bold text-primary mb-0" id="epValue">0.00</h2>
+                <span class="badge result-badge bg-primary mt-2" id="epCategory"
+                  >Netral</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="elasticity-info mb-4">
+            <h6 class="fw-semibold mb-2">Interpretasi:</h6>
+            <p id="interpretationText">
+              Elastisitas harga permintaan mengukur responsivitas jumlah
+              permintaan terhadap perubahan harga.
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <h6 class="fw-semibold mb-3">Rekomendasi Strategi:</h6>
+            <p id="recommendationText">
+              Masukkan data untuk mendapatkan rekomendasi strategi harga yang
+              tepat.
+            </p>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <button class="btn btn-outline-secondary" id="backToPrice">
+              <i class="bi bi-arrow-left me-2"></i> Kembali ke Data Harga
+            </button>
+            <button class="btn btn-primary" id="newAnalysis">
+              Analisis Baru <i class="bi bi-arrow-repeat ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <footer class="mt-5">
+        <p>
+          © 2025 Analisis Elastisitas Harga Permintaan | Alat untuk memahami
+          sensitivitas permintaan terhadap harga By
+        </p>
+        <span class="fw-bold fs-6">Redi Elwaji Aspan S.Kom</span>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
